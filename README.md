@@ -5,7 +5,7 @@ DisGo is a Golang wrapper for interfacing with Discord.
 
 ⚠️ This library is not ready for production use.
 
---
+---
 
 ## Installation
 ### Stable version:
