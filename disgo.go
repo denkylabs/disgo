@@ -1,5 +1,7 @@
 package disgo
 
+import "runtime"
+
 // The main hub for interacting with the Discord API, and the starting point for any bot
 func New(botToken string) (s *Session) {
 	s = &Session{
@@ -13,7 +15,7 @@ func New(botToken string) (s *Session) {
 			Properties: Properties{
 				Browser: "disgo",
 				Device:  "disgo",
-				Os:      "linux",
+				Os: runtime.GOOS,
 			},
 		},
 	}
