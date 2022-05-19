@@ -19,8 +19,7 @@ type Identify struct {
 	Properties     Properties `json:"properties"`
 }
 
-/* Packet types */
-
+// Packet structures
 type GatewayHeartbeatSendPacket struct {
 	Op   int   `json:"op"`
 	Data int64 `json:"d"`

@@ -11,8 +11,6 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-const DiscordWSUrl = "wss://gateway.discord.gg/?v=10&encoding=json"
-
 // Wait Group for sendAsyncMessage()
 var messagesWaitGroup sync.WaitGroup
 
@@ -22,6 +20,12 @@ var incomingWg sync.WaitGroup
 // Logs the client in, establishing a WebSocket connection to Discord
 // This function blocks until the connection is lost, ended or an error occurs
 func (s *Session) Connect() (e error) {
+	DiscordWSUrl, err := getDiscordGatewayURL()
+
+	if err != nil {
+		return err
+	}
+
 	ws, _, err := websocket.DefaultDialer.Dial(DiscordWSUrl, nil)
 
 	if err != nil {
