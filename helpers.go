@@ -11,6 +11,7 @@ func getDiscordGatewayURL() (string, error) {
 	client := &http.Client{}
 
 	req, err := http.NewRequest("GET", "https://discord.com/api/v10/gateway", nil)
+
 	if err != nil {
 		return "", err
 	}
