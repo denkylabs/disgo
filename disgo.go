@@ -16,7 +16,7 @@ func New(botToken string) (s *Session) {
 			Properties: Properties{
 				Browser: "disgo",
 				Device:  "disgo",
-				Os: runtime.GOOS,
+				Os:      runtime.GOOS,
 			},
 		},
 	}
