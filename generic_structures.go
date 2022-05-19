@@ -3,6 +3,7 @@ package disgo
 import "github.com/gorilla/websocket"
 
 type Session struct {
+	// The Identify structure of this session
 	Identify Identify `json:"identify"`
 	// The gorilla websocket connection
 	ws *websocket.Conn
