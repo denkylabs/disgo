@@ -66,7 +66,7 @@ func parsePacket(s *Session, packet map[string]interface{}) error {
 	// Sequence
 	if packet["s"] != nil {
 		packetSequence = packet["s"].(float64)
-		s.seq = packetSequence
+		s.sequence = packetSequence
 	}
 
 	fmt.Printf("Event name: %v\nEvent opcode: %v\nEvent data: %v\nEvent sequence: %v\n", packetEventName, packetOpcode, packetData, packetSequence)
@@ -174,5 +174,5 @@ func parseEvent(eventName string, eventData map[string]interface{}, s *Session) 
 
 // Gateway READY dispatch event
 func triggerReadyDispatchEvent(eventData map[string]interface{}, s *Session) {
-	s.sId = eventData["session_id"].(string)
+	s.sessionId = eventData["session_id"].(string)
 }

@@ -10,12 +10,12 @@ type Session struct {
 
 	// The heartbeat interval that Discord sent us
 	heartbeatInterval float64
-	// If the last heartbeat was acked by Discord
+	// Whether if the last sent heartbeat was acked by Discord
 	heartbeatAcked bool
-	// Timestamp of the last heartbeat
+	// The timestamp of the last heartbeat
 	lastHeartbeatAck float64
-	// Session ID set after the READY event
-	sId string
-	// The current session sequence number
-	seq float64
+	// Session ID set after the READY event. Used for Resuming
+	sessionId string
+	// The current session sequence number. Used for Resuming
+	sequence float64
 }
