@@ -10,7 +10,7 @@ const additionalOptions = "?v=10&encoding=json"
 func getDiscordGatewayURL() (string, error) {
 	client := &http.Client{}
 
-	req, err := http.NewRequest("GET", "http://discord.com/api/v10/gateway", nil)
+	req, err := http.NewRequest("GET", "https://discord.com/api/v10/gateway", nil)
 	if err != nil {
 		return "", err
 	}
