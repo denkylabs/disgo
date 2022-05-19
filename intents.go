@@ -6,7 +6,9 @@ import (
 
 type Intent uint64
 
+// A map of intents to their bitfield value
 // Reference: https://canary.discord.com/developers/docs/topics/gateway#gateway-intents
+// 		fmt.Println(IntentsFlags["Guilds"])
 var IntentsFlags = map[string]Intent{
 	"Guilds":                 1 << 0,
 	"GuildMembers":           1 << 1,
@@ -27,6 +29,8 @@ var IntentsFlags = map[string]Intent{
 	"GuildScheduledEvents":   1 << 16,
 }
 
+// Calculates the bitfield value for the given intents
+// 		intents, err := CalcIntents("Guilds", "GuildMembers")
 func CalcIntents(intents ...string) (Intent, error) {
 	var err error
 	var intentsBitField Intent = 0

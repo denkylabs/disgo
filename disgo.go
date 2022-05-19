@@ -3,6 +3,7 @@ package disgo
 import "runtime"
 
 // The main hub for interacting with the Discord API, and the starting point for any bot
+// 		s := disgo.New("My bot token")
 func New(botToken string) (s *Session) {
 	s = &Session{
 		Identify: Identify{

@@ -19,6 +19,8 @@ var incomingWg sync.WaitGroup
 
 // Logs the client in, establishing a WebSocket connection to Discord
 // This function blocks until the connection is lost, ended or an error occurs
+// 		s := disgo.New("My bot token")
+// 		err := s.Connect()
 func (s *Session) Connect() (e error) {
 	DiscordWSUrl, err := getDiscordGatewayURL()
 
