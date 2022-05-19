@@ -1,5 +1,5 @@
 # DisGo
-DisGo is a Golang wrapper for interfacing with Discord.
+[DisGo](https://pkg.go.dev/github.com/denkylabs/disgo) is a powerful Golang library for interacting with Discord.
 
 ---
 
