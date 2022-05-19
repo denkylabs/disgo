@@ -4,8 +4,10 @@ import (
 	"errors"
 )
 
+type Intent int
+
 // Reference: https://canary.discord.com/developers/docs/topics/gateway#gateway-intents
-var IntentsFlags = map[string]uint64{
+var IntentsFlags = map[string]Intent{
 	"Guilds":                 1 << 0,
 	"GuildMembers":           1 << 1,
 	"GuildBans":              1 << 2,
@@ -25,7 +27,7 @@ var IntentsFlags = map[string]uint64{
 	"GuildScheduledEvents":   1 << 16,
 }
 
-func CalcIntents(intents ...string) (error, uint64) {
+func CalcIntents(intents ...string) (uint64, error) {
 	var err error
 	var intentsBitField uint64 = 0
 
@@ -38,5 +40,5 @@ func CalcIntents(intents ...string) (error, uint64) {
 
 	}
 
-	return err, intentsBitField
+	return intentsBitField, err
 }

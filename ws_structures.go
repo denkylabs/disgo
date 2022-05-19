@@ -11,7 +11,7 @@ type Properties struct {
 type Identify struct {
 	// Token used to start a new session
 	Token          string     `json:"token"`
-	Intents        int        `json:"intents"`
+	Intents        Intent     `json:"intents"`
 	ShardID        int        `json:"shard_id"`
 	ShardCount     int        `json:"shard_count"`
 	Compress       bool       `json:"compress"`
