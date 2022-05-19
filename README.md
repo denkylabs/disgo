@@ -23,3 +23,27 @@ $ cd disgo
 $ go install
 ```
 
+## Example
+```go
+package main
+
+import "fmt"
+import "github.com/denkylabs/disgo"
+
+func main() {
+    session, err := disgo.New("Bot token")
+    session.Identify.Intents = disgo.CalcIntents("Guilds", "GuildMessages")
+
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+
+    err = session.Connect()
+
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+}
+```
