@@ -1,4 +1,4 @@
-package helly
+package disgo
 
 // A structure representing the properties of a Identify object
 type Properties struct {

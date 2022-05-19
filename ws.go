@@ -1,4 +1,4 @@
-package helly
+package disgo
 
 import (
 	"encoding/json"

@@ -1,4 +1,4 @@
-package helly
+package disgo
 
 import (
 	"encoding/json"
@@ -7,6 +7,7 @@ import (
 
 const additionalOptions = "?v=10&encoding=json"
 
+// This function is called in ws.go to get the Discord Websocket URL
 func getDiscordGatewayURL() (string, error) {
 	client := &http.Client{}
 
