@@ -1,0 +1,8 @@
+addReviewers: true
+
+addAssignees: false
+
+reviewers: 
+  - davipatricio
+
+numberOfReviewers: 0
