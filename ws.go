@@ -103,8 +103,8 @@ func parsePacket(s *Session, packet map[string]interface{}) error {
 
 // Function to handle websocket messages
 // The ReadMessage() function blocks until a message is received, thats why we need to use a goroutine
-func handleWSMessages(s *Session) (e error) {
-	var finalErr string
+func handleWSMessages(s *Session) error {
+	var finalErr error
 
 	incomingWg.Add(1)
 	go func() {
@@ -112,7 +112,7 @@ func handleWSMessages(s *Session) (e error) {
 			_, message, err := s.ws.ReadMessage()
 
 			if err != nil {
-				finalErr = fmt.Sprint(err)
+				finalErr = err
 				break
 			}
 
@@ -122,27 +122,32 @@ func handleWSMessages(s *Session) (e error) {
 			err = json.Unmarshal([]byte(strMessage), &jsonMessage)
 
 			if err != nil {
-				finalErr = fmt.Sprint(err)
+				finalErr = err
 				break
 			}
 
 			fmt.Println(strMessage)
-			parsePacket(s, jsonMessage)
+			err = parsePacket(s, jsonMessage)
+
+			if err != nil {
+				finalErr = err
+				break
+			}
 		}
 
 		// When the loop is broken, close the websocket
 		incomingWg.Done()
-		s.ws.Close()
+		err := s.ws.Close()
+
+		if err != nil {
+			finalErr = err
+		}
 	}()
 
 	// Wait until the websocket is closed or an error occurs
 	incomingWg.Wait()
 
-	if finalErr != "" {
-		return errors.New(finalErr)
-	}
-
-	return nil
+	return finalErr
 }
 
 /* Websocket send functions */
@@ -154,16 +159,13 @@ func sendHeartbeat(s *Session) {
 	sendAsyncMessage(s, GatewayHeartbeatSendPacket{1, 0})
 }
 
-func sendAsyncMessage(s *Session, message interface{}) error {
-	var err error
+func sendAsyncMessage(s *Session, message interface{}) {
 	messagesWaitGroup.Add(1)
 	go func() {
 		defer messagesWaitGroup.Done()
-		err = s.ws.WriteJSON(message)
+		s.ws.WriteJSON(message)
 	}()
 	messagesWaitGroup.Wait()
-
-	return err
 }
 
 /* Function to parse dispatch events */
