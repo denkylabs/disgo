@@ -2,7 +2,7 @@ addReviewers: true
 
 addAssignees: false
 
-reviewers: 
+reviewers:
   - davipatricio
 
 numberOfReviewers: 0
