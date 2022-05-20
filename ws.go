@@ -168,7 +168,7 @@ func sendAsyncMessage(s *Session, message interface{}) {
 	messagesWaitGroup.Wait()
 }
 
-/* Function to parse dispatch events */
+/* Function to parse dispatch & parse events */
 func parseEvent(eventName string, eventData map[string]interface{}, s *Session) {
 	switch eventName {
 	case "READY":
@@ -179,4 +179,5 @@ func parseEvent(eventName string, eventData map[string]interface{}, s *Session) 
 // Gateway READY dispatch event
 func triggerReadyDispatchEvent(eventData map[string]interface{}, s *Session) {
 	s.sessionId = eventData["session_id"].(string)
+	s.triggerEvent("READY", eventData)
 }
