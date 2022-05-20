@@ -4,12 +4,12 @@ package disgo
 var eventHandlers = make(map[string]interface{})
 
 // Add a Discord event handler
-// 	func ReadyEvent() {
+// 	func ReadyEvent(data map[string]interface{}) {
 //  	fmt.Println("Bot is ready!")
 // 	}
 // 	session.AddListener("READY", ReadyEvent)
-func (s *Session) AddListener(eventName string, function interface{}) {
-	eventHandlers[eventName] = function
+func (s *Session) AddListener(eventName string, handler func(data map[string]interface{})) {
+	eventHandlers[eventName] = handler
 }
 
 // Remove a Discord event handler
@@ -21,6 +21,6 @@ func (s *Session) RemoveListener(eventName string) {
 // Manually trigger a Discord event
 func (s *Session) triggerEvent(eventName string, eventData map[string]interface{}) {
 	if eventHandlers[eventName] != nil {
-		eventHandlers[eventName].(func(map[string]interface{}))(eventData)
+		eventHandlers[eventName].(func(data map[string]interface{}))(eventData)
 	}
 }
