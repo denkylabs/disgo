@@ -3,9 +3,9 @@ package disgo
 // Represents a Discord Unavailable Guild object
 type APIUnavailableGuild struct {
 	// The ID of the guild
-	Id          string `json:"id"`
+	Id string `json:"id"`
 	// Whether the guild is unavailable
-	Unavailable bool  `json:"unavailable"`
+	Unavailable bool `json:"unavailable"`
 }
 
 // Represents a Discord User object
