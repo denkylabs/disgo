@@ -49,7 +49,8 @@ func (s *Session) Connect() (e error) {
 func parsePacket(s *Session, packet map[string]interface{}) error {
 	var packetEventName string
 	var packetOpcode float64
-	var packetData map[string]interface{}
+	var packetData interface{}
+	var packetDataMap map[string]interface{}
 	var packetSequence float64
 
 	if packet["t"] != nil {
@@ -61,8 +62,13 @@ func parsePacket(s *Session, packet map[string]interface{}) error {
 	}
 
 	// Check if the packet has a valid data field
+	if packet["d"] != nil {
+		packetData = packet["d"]
+	}
+
+	// Check if the packet has a valid data field
 	if packet["d"] != nil && reflect.TypeOf(packet["d"]).Kind() != reflect.Bool {
-		packetData = packet["d"].(map[string]interface{})
+		packetDataMap = packet["d"].(map[string]interface{})
 	}
 
 	// Sequence
@@ -76,11 +82,11 @@ func parsePacket(s *Session, packet map[string]interface{}) error {
 	switch packetOpcode {
 	// Debug Opcode
 	case 0:
-		parseEvent(packetEventName, packetData, s)
+		parseEvent(packetEventName, packetData, packetDataMap, s)
 
 	// Hello Opcode
 	case 10:
-		s.heartbeatInterval = packetData["heartbeat_interval"].(float64)
+		s.heartbeatInterval = packetDataMap["heartbeat_interval"].(float64)
 		s.heartbeatAcked = true
 		s.lastHeartbeatAck = float64(time.Now().UnixMilli())
 		fmt.Println("Defined heartbeat interval to", s.heartbeatInterval)
@@ -169,15 +175,14 @@ func sendAsyncMessage(s *Session, message interface{}) {
 }
 
 /* Function to parse dispatch & parse events */
-func parseEvent(eventName string, eventData map[string]interface{}, s *Session) {
+func parseEvent(eventName string, eventData interface{}, eventDataMap map[string]interface{}, s *Session) {
 	switch eventName {
 	case "READY":
-		triggerReadyDispatchEvent(eventData, s)
+		triggerReadyDispatchEvent(eventDataMap, s)
 	}
 }
 
 // Gateway READY dispatch event
 func triggerReadyDispatchEvent(eventData map[string]interface{}, s *Session) {
-	s.sessionId = eventData["session_id"].(string)
 	s.triggerEvent("READY", eventData)
 }
